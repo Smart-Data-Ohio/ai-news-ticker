@@ -1,0 +1,30 @@
+# Poll interval is used by --watch. For cron, schedule bot.py every 15 minutes.
+poll_interval_minutes = 15
+minimum_score = 4
+max_items_per_post = 5
+max_age_hours = 72
+
+[[feeds]]
+name = "OpenAI"
+url = "https://openai.com/news/rss.xml"
+ai_focused = true
+
+[[feeds]]
+name = "Google DeepMind"
+url = "https://deepmind.google/blog/rss.xml"
+ai_focused = true
+
+[[feeds]]
+name = "Google AI"
+url = "https://www.blog.google/technology/ai/rss/"
+ai_focused = true
+
+[[feeds]]
+name = "TechCrunch AI"
+url = "https://techcrunch.com/category/artificial-intelligence/feed/"
+ai_focused = true
+
+[[feeds]]
+name = "AI lab news (Google News)"
+url = "https://news.google.com/rss/search?q=site%3Aanthropic.com%2Fnews+OR+site%3Ax.ai%2Fnews+OR+site%3Aai.meta.com%2Fblog&hl=en-US&gl=US&ceid=US%3Aen"
+ai_focused = true
