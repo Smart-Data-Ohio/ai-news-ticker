@@ -1,0 +1,62 @@
+name: AI News Ticker
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      bootstrap:
+        description: Record current feed stories as already seen (run once before enabling normal posts)
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai-news-ticker-poll
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      AI_NEWS_DB: state.sqlite3
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      SLACK_CHANNEL_ID: ${{ vars.SLACK_CHANNEL_ID }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Restore ticker state
+        uses: actions/cache/restore@v6
+        with:
+          path: state.sqlite3
+          key: ai-news-ticker-state-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ai-news-ticker-state-
+
+      - name: Bootstrap current feed stories
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.bootstrap }}
+        run: python bot.py --bootstrap
+
+      - name: Check Slack configuration
+        if: ${{ env.SLACK_BOT_TOKEN == '' || env.SLACK_CHANNEL_ID == '' }}
+        run: echo "::warning::Set the SLACK_BOT_TOKEN secret and SLACK_CHANNEL_ID variable in repository Actions settings before posting."
+
+      - name: Poll feeds and post digest
+        if: ${{ (github.event_name != 'workflow_dispatch' || !inputs.bootstrap) && env.SLACK_BOT_TOKEN != '' && env.SLACK_CHANNEL_ID != '' }}
+        run: python bot.py
+
+      - name: Save ticker state
+        if: ${{ always() && hashFiles('state.sqlite3') != '' }}
+        uses: actions/cache/save@v6
+        with:
+          path: state.sqlite3
+          key: ai-news-ticker-state-${{ github.run_id }}-${{ github.run_attempt }}
+
