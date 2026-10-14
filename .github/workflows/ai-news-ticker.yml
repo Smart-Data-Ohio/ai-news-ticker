@@ -41,6 +41,11 @@ jobs:
           restore-keys: |
             ai-news-ticker-state-
 
+      - name: Bootstrap feeds on first run
+        id: first_run_bootstrap
+        if: ${{ hashFiles('state.sqlite3') == '' && !(github.event_name == 'workflow_dispatch' && inputs.bootstrap) }}
+        run: python bot.py --bootstrap
+
       - name: Bootstrap current feed stories
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.bootstrap }}
         run: python bot.py --bootstrap
@@ -50,7 +55,7 @@ jobs:
         run: echo "::warning::Set the SLACK_BOT_TOKEN secret and SLACK_CHANNEL_ID variable in repository Actions settings before posting."
 
       - name: Poll feeds and post digest
-        if: ${{ (github.event_name != 'workflow_dispatch' || !inputs.bootstrap) && env.SLACK_BOT_TOKEN != '' && env.SLACK_CHANNEL_ID != '' }}
+        if: ${{ steps.first_run_bootstrap.outcome != 'success' && (github.event_name != 'workflow_dispatch' || !inputs.bootstrap) && env.SLACK_BOT_TOKEN != '' && env.SLACK_CHANNEL_ID != '' }}
         run: python bot.py
 
       - name: Save ticker state
@@ -59,4 +64,3 @@ jobs:
         with:
           path: state.sqlite3
           key: ai-news-ticker-state-${{ github.run_id }}-${{ github.run_attempt }}
-
