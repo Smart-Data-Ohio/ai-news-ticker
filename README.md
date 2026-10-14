@@ -9,7 +9,7 @@ A small Python service that polls RSS/Atom feeds, filters for likely AI model re
 3. Keep qualifying stories in a local SQLite queue. URLs are the deduplication key.
 4. Send up to five queued stories as a single Slack message. A failed Slack request leaves them queued for the next run.
 
-This first version uses each feed's headline and excerpt; it does not invent summaries or claim to verify a story. The feed mix includes primary lab sources plus TechCrunch AI and a Google News query for labs without a stable official RSS feed. Add or remove feeds in `config.toml` as needed.
+This first version uses each feed's headline and excerpt; it does not invent summaries or claim to verify a story. The feed mix includes primary lab sources plus TechCrunch AI and a Google News query for labs without a stable official RSS feed. X timelines for OpenAI, Anthropic, Google DeepMind, Meta AI, xAI, and Mistral AI are read through RSSHub's public community relay; no X API token is needed, but the relay may be rate-limited or temporarily unavailable. Add or remove feeds in `config.toml` as needed.
 
 ## Set up Slack
 
