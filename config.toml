@@ -29,33 +29,33 @@ name = "AI lab news (Google News)"
 url = "https://news.google.com/rss/search?q=site%3Aanthropic.com%2Fnews+OR+site%3Ax.ai%2Fnews+OR+site%3Aai.meta.com%2Fblog&hl=en-US&gl=US&ceid=US%3Aen"
 ai_focused = true
 
-# X timelines via RSSHub's public community relay (no X API token required).
+# X timelines via FxEmbed's public RSS relay (no X API token required).
 [[feeds]]
 name = "X: OpenAI"
-url = "https://rsshub.app/twitter/user/OpenAI/exclude_rts_replies"
+url = "https://fxtwitter.com/OpenAI/feed.xml?count=20"
 ai_focused = true
 
 [[feeds]]
 name = "X: Anthropic"
-url = "https://rsshub.app/twitter/user/AnthropicAI/exclude_rts_replies"
+url = "https://fxtwitter.com/AnthropicAI/feed.xml?count=20"
 ai_focused = true
 
 [[feeds]]
 name = "X: Google DeepMind"
-url = "https://rsshub.app/twitter/user/GoogleDeepMind/exclude_rts_replies"
+url = "https://fxtwitter.com/GoogleDeepMind/feed.xml?count=20"
 ai_focused = true
 
 [[feeds]]
 name = "X: Meta AI"
-url = "https://rsshub.app/twitter/user/MetaAI/exclude_rts_replies"
+url = "https://fxtwitter.com/MetaAI/feed.xml?count=20"
 ai_focused = true
 
 [[feeds]]
 name = "X: xAI"
-url = "https://rsshub.app/twitter/user/xai/exclude_rts_replies"
+url = "https://fxtwitter.com/xai/feed.xml?count=20"
 ai_focused = true
 
 [[feeds]]
 name = "X: Mistral AI"
-url = "https://rsshub.app/twitter/user/MistralAI/exclude_rts_replies"
+url = "https://fxtwitter.com/MistralAI/feed.xml?count=20"
 ai_focused = true
