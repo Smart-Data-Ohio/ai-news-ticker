@@ -66,7 +66,7 @@ In the repository's **Settings → Secrets and variables → Actions**, add:
 - Repository secret `SLACK_BOT_TOKEN` with the Slack bot token (`xoxb-…`).
 - Repository variable `SLACK_CHANNEL_ID` with the destination channel ID.
 
-Before the first normal post, go to **Actions → AI News Ticker → Run workflow**, check the `bootstrap` option, and run it once. This records the current feed items without posting them. Subsequent scheduled runs will post only newer qualifying stories. The cache is convenient state storage for this lightweight bot; it is not a substitute for a separately backed-up database.
+The first scheduled run automatically records current feed items as already seen and does not post them. Subsequent runs post only newer qualifying stories. You can also manually run the workflow with `bootstrap` checked to reset the baseline. The cache is convenient state storage for this lightweight bot; it is not a substitute for a separately backed-up database.
 
 ## Tuning
 
