@@ -11,7 +11,7 @@ ai_focused = true
 
 [[feeds]]
 name = "Google DeepMind"
-url = "https://deepmind.google/blog/rss.xml"
+url = "https://deepmind.google/blog/feed/basic/"
 ai_focused = true
 
 [[feeds]]
